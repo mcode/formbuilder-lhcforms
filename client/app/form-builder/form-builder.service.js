@@ -1561,7 +1561,19 @@ fb.service('formBuilderService', ['$window', 'lodash', '$q', '$http', 'dataConst
                 }
 
                 break;
-
+              case "http://hl7.org/fhir/StructureDefinition/cqf-expression":
+                  if(ext.valueExpression && ext.valueExpression.language.toLowerCase() === 'text/cql') {
+                    fieldName = '_cqfExpression';
+                    let item = thisService.getFormBuilderField(lfItem.advanced.items, "_cqfExpression");
+                    if(item && ext.valueExpression.expression){
+                      item.value = ext.valueExpression.expression
+                    }
+                  }
+                  else {
+                    hidden = true;
+                  }
+  
+                  break;
               default:
                 hidden = true; // Save unhandled extension as it is.
                 break;
@@ -1832,6 +1844,36 @@ fb.service('formBuilderService', ['$window', 'lodash', '$q', '$http', 'dataConst
       aListItems = [];
       lodash.forEach(importedExtensionsArray, function(x) {
         if(x.valueExpression.language.toLowerCase() === 'text/fhirpath') {
+          var item = angular.copy(lfItem[indexInfo.category].items[index]);
+          item.items[0].value = x.valueExpression.name;
+          item.items[1].value = x.valueExpression.expression;
+          item.items[2].value = x.valueExpression.description;
+          aListItems.push(item);
+        }
+      });
+    }
+
+    if(aListItems && aListItems.length > 0) {
+      lfItem[indexInfo.category].items.splice.apply(lfItem[indexInfo.category].items, [index, 1].concat(aListItems));
+    }
+  }
+
+
+  /**
+   * Update form builder model with imported item.extension array.
+   *
+   * @param lfItem - Form builder model representing a particular node (item).
+   * @param importedExtensionsArray - extension array of the item.
+   */
+  function updateCqfExpression(lfItem, importedExtensionsArray) {
+    var field = '_cqfExpression';
+    var indexInfo = dataConstants.INITIAL_FIELD_INDICES[field];
+    var index = thisService.getFormBuilderFieldIndex(lfItem[indexInfo.category].items, field);
+    var aListItems = null;
+    if(importedExtensionsArray && lodash.isArray(importedExtensionsArray)) {
+      aListItems = [];
+      lodash.forEach(importedExtensionsArray, function(x) {
+        if(x.valueExpression.language.toLowerCase() === 'text/cql') {
           var item = angular.copy(lfItem[indexInfo.category].items[index]);
           item.items[0].value = x.valueExpression.name;
           item.items[1].value = x.valueExpression.expression;

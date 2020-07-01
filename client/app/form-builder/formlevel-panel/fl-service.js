@@ -253,6 +253,17 @@ angular.module('formBuilder')
             ret = ret.length > 0 ? ret : null;
           }
           break;
+          case '_cqfLibrary':
+            if(importedFormLevelFieldsObj.extension) {
+              ret = importedFormLevelFieldsObj.extension.reduce(function(acc, ext) {
+                if(ext.url === 'http://hl7.org/fhir/StructureDefinition/cqf-library') {
+                  acc.push(ext.valueCanonical);
+                }
+                return acc;
+              }, []);
+              ret = ret.length > 0 ? ret : null;
+            }
+            break;
       }
       return ret;
     };
