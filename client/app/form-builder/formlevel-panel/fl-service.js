@@ -11,6 +11,7 @@ angular.module('formBuilder')
       var lfFormLevelData = flService._convertFBFormLevelItems(fbFormLevelData.basic.items);
       lodash.assign(lfFormLevelData, flService._convertFBFormLevelItems(fbFormLevelData.advanced.items));
       flService._convertVariableExtensions(lfFormLevelData);
+      flService._convertCQFLibraryExtension(lfFormLevelData);
       return lfFormLevelData;
     };
 
@@ -276,6 +277,29 @@ angular.module('formBuilder')
           lfFormData.extension.push({
             url: 'http://hl7.org/fhir/StructureDefinition/variable',
             valueExpression: vars[i]
+          });
+        }
+      }
+    };
+
+        /**
+     * Convert data collected in the form builder input fields for FHIR variables into FHIR extension objects,
+     * to be placed into the LForms form definition.
+     *
+     * @param lfFormData - Form level data object.
+     */
+    flService._convertCQFLibraryExtension = function (lfFormData) {
+      if(lfFormData) {
+        // FHIRPath variables
+        var expression = lfFormData._cqfLibrary;
+        delete lfFormData._cqfLibrary;
+        if(expression){
+          if(!lfFormData.extension) {
+            lfFormData.extension = [];
+          }
+          lfFormData.extension.push({
+            url: 'http://hl7.org/fhir/StructureDefinition/cqf-library',
+            valueCanonical: expression
           });
         }
       }

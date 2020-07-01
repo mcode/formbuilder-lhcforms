@@ -666,7 +666,21 @@ fb.service('formBuilderService', ['$window', 'lodash', '$q', '$http', 'dataConst
             }
           }
           break;
-
+        case "_cqfExpression" :
+          if(item.value){
+          ans = {
+            url: "http://hl7.org/fhir/StructureDefinition/cqf-expression",
+            valueExpression: {
+              language: (item.language && item.language.trim !== "") ? item.langauge : "text/cql",
+              expression: item.value
+            }
+          };
+          if(!ret["extension"]) {
+            ret["extension"] = [];
+          }
+          ret["extension"].push(ans);
+        }
+          break;
         case "_fhirVariables":
           ans = {
             url: dataConstants.fhirVariableUrl,

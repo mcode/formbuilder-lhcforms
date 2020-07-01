@@ -303,6 +303,15 @@ var advFormLevelFieldsDef = {
       "linkId": "/codeList"
     },
     {
+    "questionCode": "_cqfLibrary",
+      "question": "CQF Library Extension",
+      "localQuestionCode": "string",
+      "dataType": "ST",
+      "header": false,
+      "codingInstructions": "Add a CQL Library Extension (Canonical URL)",
+      "linkId": "/_cqfLibrary"
+    },
+    {
       "questionCode": "_fhirVariables",
       "localQuestionCode": "Expression",
       "question": "FHIRPath Variable",
