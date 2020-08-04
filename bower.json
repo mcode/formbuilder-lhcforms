@@ -51,7 +51,7 @@
     "ngSmoothScroll": "~2.0.0",
     "traverse": "0.6.7",
     "angular-spinner": "~0.8.0",
-    "fhir.js": "git://github.com/akanduru/fhir.js#ng-fhir"
+    "fhir.js": "https://github.com/akanduru/fhir.js.git#ng-fhir"
   },
   "overrides": {
     "jquery-ui": {
