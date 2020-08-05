@@ -418,12 +418,12 @@ var answerLists = {
   
   "CQLStatements": [
     {
-      "text": "Maximum length",
-      "code": "maxLength"
+      "text": "Cancer Disease Status",
+      "code": "\"HL7FHIRImplementationGuideminimalCommonOncologyDataElementsmCODERelease1USRealmSTU1\".CancerDiseaseStatus"
     },
     {
-      "text": "Pattern",
-      "code": "pattern"
+      "text": "Cancer Genomics Report",
+      "code": "\"HL7FHIRImplementationGuideminimalCommonOncologyDataElementsmCODERelease1USRealmSTU1\".CancerGenomicsReport"
     }
   ],
 };

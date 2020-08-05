@@ -828,7 +828,7 @@ var advFormBuilderDef = {
       "header": false,
       "codingInstructions": "Add a CQL expression definition ",
       "linkId": "/_cqfExpression",
-      "answers": "restrictionName",
+      "answers": "CQLStatements",
       "displayControl": {
         "answerLayout": {
           "type": "COMBO_BOX"
