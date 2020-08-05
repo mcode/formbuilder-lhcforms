@@ -822,12 +822,18 @@ var advFormBuilderDef = {
     },
     {
 
-    "questionCode": "_cqfExpression",
+      "questionCode": "_cqfExpression",
       "question": "CQF Expression",
-      "dataType": "ST",
+      "dataType": "CNE",
       "header": false,
       "codingInstructions": "Add a CQL expression definition ",
-      "linkId": "/_cqfExpression"
+      "linkId": "/_cqfExpression",
+      "answers": "restrictionName",
+      "displayControl": {
+        "answerLayout": {
+          "type": "COMBO_BOX"
+        }
+      },
     },
     {
       "questionCode": "_fhirVariables",

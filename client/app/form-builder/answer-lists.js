@@ -415,4 +415,15 @@ var answerLists = {
     }
     */
   ],
+  
+  "CQLStatements": [
+    {
+      "text": "Maximum length",
+      "code": "maxLength"
+    },
+    {
+      "text": "Pattern",
+      "code": "pattern"
+    }
+  ],
 };
