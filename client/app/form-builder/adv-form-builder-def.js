@@ -821,7 +821,6 @@ var advFormBuilderDef = {
       "linkId": "/copyrightNotice"
     },
     {
-
       "questionCode": "_cqfExpression",
       "question": "CQF Expression",
       "dataType": "CNE",
