@@ -666,10 +666,27 @@ fb.service('formBuilderService', ['$window', 'lodash', '$q', '$http', 'dataConst
             }
           }
           break;
+
         case "_cqfExpression" :
           if(item.value){
           ans = {
             url: "http://hl7.org/fhir/StructureDefinition/cqf-expression",
+            valueExpression: {
+              language: (item.language && item.language.trim !== "") ? item.langauge : "text/cql",
+              expression: item.value
+            }
+          };
+          if(!ret["extension"]) {
+            ret["extension"] = [];
+          }
+          ret["extension"].push(ans);
+        }
+          break;
+
+        case "_sdcQuestionnaireCandidateExpression" :
+          if(item.value){
+          ans = {
+            url: "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression",
             valueExpression: {
               language: (item.language && item.language.trim !== "") ? item.langauge : "text/cql",
               expression: item.value
@@ -1574,6 +1591,19 @@ fb.service('formBuilderService', ['$window', 'lodash', '$q', '$http', 'dataConst
                   }
   
                   break;
+              case "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression":
+                if(ext.valueExpression && ext.valueExpression.language.toLowerCase() === 'text/cql') {
+                  fieldName = '_sdcQuestionnaireCandidateExpression';
+                  let item = thisService.getFormBuilderField(lfItem.advanced.items, "_sdcQuestionnaireCandidateExpression");
+                  if(item && ext.valueExpression.expression){
+                    item.value = ext.valueExpression.expression
+                  }
+                }
+                else {
+                  hidden = true;
+                }
+
+                break;
               default:
                 hidden = true; // Save unhandled extension as it is.
                 break;
@@ -1865,8 +1895,8 @@ fb.service('formBuilderService', ['$window', 'lodash', '$q', '$http', 'dataConst
    * @param lfItem - Form builder model representing a particular node (item).
    * @param importedExtensionsArray - extension array of the item.
    */
-  function updateCqfExpression(lfItem, importedExtensionsArray) {
-    var field = '_cqfExpression';
+  function updateSdcQuestionnaireCandidateExpression(lfItem, importedExtensionsArray) {
+    var field = '_sdcQuestionnaireCandidateExpression';
     var indexInfo = dataConstants.INITIAL_FIELD_INDICES[field];
     var index = thisService.getFormBuilderFieldIndex(lfItem[indexInfo.category].items, field);
     var aListItems = null;
