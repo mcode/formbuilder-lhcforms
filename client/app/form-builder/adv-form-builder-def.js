@@ -821,14 +821,13 @@ var advFormBuilderDef = {
       "linkId": "/copyrightNotice"
     },
     {
-
-    "questionCode": "_cqfExpression",
-      "question": "CQF Expression",
-      "dataType": "ST",
-      "header": false,
-      "codingInstructions": "Add a CQL expression definition ",
-      "linkId": "/_cqfExpression"
-    },
+      "questionCode": "_sdcQuestionnaireCandidateExpression",
+        "question": "SDC Questionnaire Candidate Expression",
+        "dataType": "ST",
+        "header": false,
+        "codingInstructions": "Add a CQL expression definition ",
+        "linkId": "/_sdcQuestionnaireCandidateExpression"
+      },
     {
       "questionCode": "_fhirVariables",
       "question": "FHIR Variable",
