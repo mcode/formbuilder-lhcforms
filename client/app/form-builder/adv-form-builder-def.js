@@ -835,21 +835,13 @@ var advFormBuilderDef = {
           "question": "Language",
           "dataType": "CNE",
           "linkId": "_sdcQuestionnaireCandidateExpression/language",
-          "codingInstructions": "Add an expression definition",
-          "answers": "expressionLanguage",
-          "displayControl": {
-            "answerLayout": {
-              "type": "RADIO_CHECKBOX",
-              "columns": "1"
-            }
-          }
+          "answers": "expressionLanguage"
         },
         {
           "questionCode": "expression",
           "question": "Expresion",
           "dataType": "ST",
           "linkId": "_sdcQuestionnaireCandidateExpression/expression",
-          "codingInstructions": "Add an expression definition"
         }
       ],
       "linkId": "/_sdcQuestionnaireCandidateExpression"

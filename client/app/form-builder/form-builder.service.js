@@ -688,7 +688,7 @@ fb.service('formBuilderService', ['$window', 'lodash', '$q', '$http', 'dataConst
             ans = {
               url: "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression",
               valueExpression: {
-                language: (item.items[0].value) ? item.items[0].value.code : "text/cql",
+                language: (item.items[0].value) ? item.items[0].value.code : "FHIRPath",
                 expression: item.items[1].value
               }
             };
@@ -1598,11 +1598,32 @@ fb.service('formBuilderService', ['$window', 'lodash', '$q', '$http', 'dataConst
                 if (ext.valueExpression && ( (lang === 'text/cql') || (lang === 'text/fhirpath') || (lang === 'application/x-fhir-query') ) ) {
                   let item = thisService.getFormBuilderField(lfItem.advanced.items, "_sdcQuestionnaireCandidateExpression");
                   if(item) {
-                    item.items[0].value = expression;
-                    if (ext.valuleExpression.expression){
+                    console.log(item);
+                    switch (lang) {
+                      case 'text/fhirpath':
+                        langValue = {
+                          code: "text/fhirpath",
+                          text: "FHIRPath"
+                        };
+                        break;
+                      case 'application/x-fhir-query':
+                        langValue = {
+                          code: "application/x-fhir-query",
+                          text: "FHIR Query"
+                        };
+                        break;
+                      default:
+                        langValue = {
+                          code: "text/cql",
+                          text: "CQL"
+                        };
+                    }
+                    item.items[0].value = langValue;
+                    if (ext.valueExpression.expression){
                       item.items[1].value = ext.valueExpression.expression;
                     }
                   }
+                  console.log(item);
                 }
                 else {
                   hidden = true;
