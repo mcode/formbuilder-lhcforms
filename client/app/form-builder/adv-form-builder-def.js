@@ -839,7 +839,7 @@ var advFormBuilderDef = {
         },
         {
           "questionCode": "expression",
-          "question": "Expresion",
+          "question": "Expression",
           "dataType": "ST",
           "linkId": "_sdcQuestionnaireCandidateExpression/expression",
         }

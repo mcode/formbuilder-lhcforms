@@ -417,16 +417,16 @@ var answerLists = {
   ],
   "expressionLanguage": [
     {
+      "text": "CQL",
+      "code": "text/cql"
+    },
+    {
       "text": "FHIRPath",
       "code": "text/fhirpath"
     },
     {
       "text": "FHIR Query",
       "code": "application/x-fhir-query"
-    },
-    {
-      "text": "CQL",
-      "code": "text/cql"
     }
   ]
 };
