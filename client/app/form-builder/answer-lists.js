@@ -426,7 +426,7 @@ var answerLists = {
     },
     {
       "text": "FHIR Query",
-      "code": "application/x-fhir-query	"
+      "code": "application/x-fhir-query"
     }
   ]
 };

@@ -688,8 +688,8 @@ fb.service('formBuilderService', ['$window', 'lodash', '$q', '$http', 'dataConst
             ans = {
               url: "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression",
               valueExpression: {
-                language: (item.items[0].value) ? item.items[0].value : "text/cql",
-                expression: item.items[0].value
+                language: (item.items[0].value) ? item.items[0].value.code : "text/cql",
+                expression: item.items[1].value
               }
             };
             if(!ret["extension"]) {
@@ -1585,7 +1585,7 @@ fb.service('formBuilderService', ['$window', 'lodash', '$q', '$http', 'dataConst
                     fieldName = '_cqfExpression';
                     let item = thisService.getFormBuilderField(lfItem.advanced.items, "_cqfExpression");
                     if(item && ext.valueExpression.expression){
-                      item.value = ext.valueExpression.expression
+                      item.value = ext.valueExpression.expression;
                     }
                   }
                   else {
@@ -1595,19 +1595,21 @@ fb.service('formBuilderService', ['$window', 'lodash', '$q', '$http', 'dataConst
                   break;
               case "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression":
                 let lang = ext.valueExpression.language.toLowerCase();
-                if(lang && ( (lang === 'text/cql') || (lang === 'text/fhirpath') || (lang === 'application/x-fhir-query') ) ) {
-                  fieldName = '_sdcQuestionnaireCandidateExpression';
+                if (ext.valueExpression && ( (lang === 'text/cql') || (lang === 'text/fhirpath') || (lang === 'application/x-fhir-query') ) ) {
                   let item = thisService.getFormBuilderField(lfItem.advanced.items, "_sdcQuestionnaireCandidateExpression");
-                  if(item && ext.valueExpression.expression){
-                    item.value = ext.valueExpression.expression
+                  if(item) {
+                    item.items[0].value = expression;
+                    if (ext.valuleExpression.expression){
+                      item.items[1].value = ext.valueExpression.expression;
+                    }
                   }
-                  varExtensions.push(ext)
                 }
                 else {
                   hidden = true;
                 }
 
                 break;
+
               default:
                 hidden = true; // Save unhandled extension as it is.
                 break;
@@ -1616,7 +1618,6 @@ fb.service('formBuilderService', ['$window', 'lodash', '$q', '$http', 'dataConst
           });
 
           updateVariables(lfItem, varExtensions);
-          updateSdcQuestionnaireCandidateExpression(lfItem, sdcExtensions)
           addAsHidden(lfItem, name, hiddenList);
         }
         break;
