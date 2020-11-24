@@ -684,19 +684,19 @@ fb.service('formBuilderService', ['$window', 'lodash', '$q', '$http', 'dataConst
           break;
 
         case "_sdcQuestionnaireCandidateExpression" :
-          if(item.value){
-          ans = {
-            url: "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression",
-            valueExpression: {
-              language: (item.language && item.language.trim !== "") ? item.langauge : "text/cql",
-              expression: item.value
+          if(item.items[1].value) {
+            ans = {
+              url: "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression",
+              valueExpression: {
+                language: (item.items[0].value) ? item.items[0].value.code : "text/cql",
+                expression: item.items[1].value
+              }
+            };
+            if(!ret["extension"]) {
+              ret["extension"] = [];
             }
-          };
-          if(!ret["extension"]) {
-            ret["extension"] = [];
+            ret["extension"].push(ans);
           }
-          ret["extension"].push(ans);
-        }
           break;
         case "_fhirVariables":
           ans = {
@@ -1592,17 +1592,38 @@ fb.service('formBuilderService', ['$window', 'lodash', '$q', '$http', 'dataConst
   
                   break;
               case "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression":
-                if(ext.valueExpression && ext.valueExpression.language.toLowerCase() === 'text/cql') {
-                  fieldName = '_sdcQuestionnaireCandidateExpression';
+                let languageCode = (ext.valueExpression) ? ext.valueExpression.language.toLowerCase() : '';
+                if (ext.valueExpression && ( (languageCode === 'text/cql') || (languageCode === 'text/fhirpath') || (languageCode === 'application/x-fhir-query') ) ) {
                   let item = thisService.getFormBuilderField(lfItem.advanced.items, "_sdcQuestionnaireCandidateExpression");
-                  if(item && ext.valueExpression.expression){
-                    item.value = ext.valueExpression.expression
+                  if(item) {
+                    switch (languageCode) {
+                      case 'text/fhirpath':
+                        languageObj = {
+                          code: "text/fhirpath",
+                          text: "FHIRPath"
+                        };
+                        break;
+                      case 'application/x-fhir-query':
+                        languageObj = {
+                          code: "application/x-fhir-query",
+                          text: "FHIR Query"
+                        };
+                        break;
+                      default:
+                        languageObj = {
+                          code: "text/cql",
+                          text: "CQL"
+                        };
+                    }
+                    item.items[0].value = languageObj;
+                    if (ext.valueExpression.expression){
+                      item.items[1].value = ext.valueExpression.expression;
+                    }
                   }
                 }
                 else {
                   hidden = true;
                 }
-
                 break;
               default:
                 hidden = true; // Save unhandled extension as it is.
@@ -1612,7 +1633,6 @@ fb.service('formBuilderService', ['$window', 'lodash', '$q', '$http', 'dataConst
           });
 
           updateVariables(lfItem, varExtensions);
-
           addAsHidden(lfItem, name, hiddenList);
         }
         break;

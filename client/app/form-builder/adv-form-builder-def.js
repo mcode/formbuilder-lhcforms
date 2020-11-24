@@ -822,12 +822,30 @@ var advFormBuilderDef = {
     },
     {
       "questionCode": "_sdcQuestionnaireCandidateExpression",
-        "question": "SDC Questionnaire Candidate Expression",
-        "dataType": "ST",
-        "header": false,
-        "codingInstructions": "Add a CQL expression definition ",
-        "linkId": "/_sdcQuestionnaireCandidateExpression"
+      "question": "SDC Questionnaire Candidate Expression",
+      "codingInstructions": "Add an SDC Candidate Answer Expression",
+      "header": true,
+      "questionCardinality": {
+        "min": "1",
+        "max": "*"
       },
+      "items": [
+        {
+          "questionCode": "language",
+          "question": "Language",
+          "dataType": "CNE",
+          "linkId": "_sdcQuestionnaireCandidateExpression/language",
+          "answers": "expressionLanguage"
+        },
+        {
+          "questionCode": "expression",
+          "question": "Expression",
+          "dataType": "ST",
+          "linkId": "_sdcQuestionnaireCandidateExpression/expression",
+        }
+      ],
+      "linkId": "/_sdcQuestionnaireCandidateExpression"
+    },
     {
       "questionCode": "_fhirVariables",
       "question": "FHIR Variable",
